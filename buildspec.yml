@@ -1,0 +1,17 @@
+phases:
+  pre_build:
+    commands:
+      - echo Installing dependencies...
+      - npm install
+  build:
+    commands:
+      - echo Building the Node.js project...
+      - npm run build
+  post_build:
+    commands:
+      - echo Removing node_modules...
+      - rm -rf node_modules
+artifacts:
+  base-directory: '.'
+  files:
+    - '**/*'
