@@ -6,33 +6,41 @@ export async function getSearchProductsService(
   search?: string,
   page: number = 1,
   limit: number = 24) {
-  let query = "SELECT * FROM scrapped_data WHERE 1 = 1";
+
+  let baseQuery = "FROM scrapped_data WHERE 1 = 1";
   const queryParams = [];
 
   if (website) {
-    query += " AND website = $" + (queryParams.length + 1);
+    baseQuery += " AND website = $" + (queryParams.length + 1);
     queryParams.push(website);
   }
 
   if (category) {
-    query += " AND category = $" + (queryParams.length + 1);
+    baseQuery += " AND category = $" + (queryParams.length + 1);
     queryParams.push(category);
   }
 
   if (search) {
-    query += " AND description ILIKE $" + (queryParams.length + 1);
+    baseQuery += " AND description ILIKE $" + (queryParams.length + 1);
     queryParams.push(`%${search}%`);
   }
 
-  const offset = (page - 1) * limit;
+  const countQuery = "SELECT COUNT(*) " + baseQuery;
 
-  query += " ORDER BY id";
-  query += " LIMIT $" + (queryParams.length + 1) + " OFFSET $" + (queryParams.length + 2);
+  const dataQuery = "SELECT * " + baseQuery + " ORDER BY id LIMIT $" + (queryParams.length + 1) + " OFFSET $" + (queryParams.length + 2);
+  const offset = (page - 1) * limit;
   queryParams.push(limit, offset);
 
   try {
-    const { rows } = await poolConnectionClient.query(query, queryParams);
-    return rows;
+    const countResult = await poolConnectionClient.query(countQuery, queryParams.slice(0, -2));
+    const totalCount = parseInt(countResult.rows[0].count, 10);
+
+    const { rows: data } = await poolConnectionClient.query(dataQuery, queryParams);
+
+    return {
+      data,
+      total: totalCount
+    };
   } catch (error) {
     console.error("Error querying data:", error);
     throw new Error("Internal server error");
