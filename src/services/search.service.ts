@@ -12,7 +12,8 @@ export async function getSearchProductsService(
   const queryParams = [];
 
   if (website) {
-    baseQuery += " AND website = $" + (queryParams.length + 1);
+    baseQuery += " AND website = $" +
+     (queryParams.length + 1);
     queryParams.push(website);
   }
 
@@ -29,8 +30,9 @@ export async function getSearchProductsService(
   const countQuery = "SELECT COUNT(*) " + baseQuery;
 
   const dataQuery = "SELECT * " + baseQuery + " ORDER BY id LIMIT $" + (queryParams.length + 1) + " OFFSET $" + (queryParams.length + 2);
-  const offset = (page - 1) * limit;
+  const offset = page * limit - limit;
   queryParams.push(limit, offset);
+  
 
   try {
     const countResult = await poolConnectionClient.query(countQuery, queryParams.slice(0, -2));
