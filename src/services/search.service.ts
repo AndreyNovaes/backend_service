@@ -1,5 +1,6 @@
 import { poolConnectionClient } from "../database/pgPoolConnection.database";
 
+// Mano que que eu fiz aqui só jesus sabe
 export async function getSearchProductsService(
   website?: string,
   category?: string,
