@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load Test Results</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .green {
+            background-color: #90ee90;
+        }
+        .red {
+            background-color: #ffcccb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Load Test Results</h1>
+    <p>Good Requests: {{ good_percentile }}%</p>
+    <p>Bad Requests: {{ bad_percentile }}%</p>
+    <table>
+        <thead>
+            <tr>
+                <th>URL</th>
+                <th>StartTime</th>
+                <th>Milliseconds</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+                <tr>
+                    <td>{{ row['URL'] }}</td>
+                    <td>{{ row['StartTime'] }}</td>
+                    <td class="{{ 'green' if row['Milliseconds'] <= 2000 else 'red' }}">{{ row['Milliseconds'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

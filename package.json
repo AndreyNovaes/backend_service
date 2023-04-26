@@ -7,7 +7,7 @@
     "build": "tsc",
     "dev": "ts-node src/server.ts",
     "start": "node dist/server.js",
-    "test": "jest --passWithNoTests"
+    "test": "bash report_load_test/generate_report.sh && xdg-open report_load_test/report.html"
   },
   "keywords": [],
   "author": "",

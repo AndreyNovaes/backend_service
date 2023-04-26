@@ -1,3 +1,6 @@
 dist
 node_modules
 .env
+ab_results.csv
+ab_results.tsv
+venv
