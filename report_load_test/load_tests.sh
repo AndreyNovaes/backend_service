@@ -3,7 +3,18 @@
 echo "Testing Urls:"
 bash ./report_load_test/test_relative_urls.sh
 
-echo "Load Testing Urls:"
+echo "is apache benchmark installed?"
+if ! command -v ab &> /dev/null; then
+  echo "apache benchmark is not installed. can i install it?"
+  read -p "Install apache benchmark? (y/n) " -n 1 -r
+  echo -e "\n"
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo "Installing apache benchmark..."
+    sudo apt-get install apache2-utils
+  else
+    echo "Skipping apache benchmark installation..."
+  fi
+fi
 
 echo "Starting load test: 1000 requests with 100 concurrent in 60 seconds..."
 CONCURRENT_USERS=100
