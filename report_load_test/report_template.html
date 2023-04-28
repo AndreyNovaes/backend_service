@@ -28,8 +28,11 @@
 </head>
 <body>
     <h1>Load Test Results</h1>
-    <p>Good Requests: {{ good_percentile }}%</p>
-    <p>Bad Requests: {{ bad_percentile }}%</p>
+    <h2>Good Requests: {{ good_percentile }}%</h2>
+    <h2>Bad Requests: {{ bad_percentile }}%</h2>
+    <h2>Concurrent Users: {{ concurrent_users }}</h2>
+    <h2>Number of Requests: {{ num_requests }}</h2>
+    <h2>Seconds: {{ seconds }}</h2>
     <table>
         <thead>
             <tr>

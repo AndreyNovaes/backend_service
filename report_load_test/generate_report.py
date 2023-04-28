@@ -30,9 +30,12 @@ def main():
     df, good_percentile, bad_percentile = process_csv_results(csv_file)
 
     data = df.to_dict('records')
+    concurrent_users = 10000
+    num_requests = 100000
+    seconds = 60
 
     with open(output_file, "w") as f:
-        f.write(render_template("./report_load_test/report_template.html", good_percentile=good_percentile, bad_percentile=bad_percentile, data=data))
+        f.write(render_template("./report_load_test/report_template.html", good_percentile=good_percentile, bad_percentile=bad_percentile, data=data, concurrent_users=concurrent_users, num_requests=num_requests, seconds=seconds))
 
 if __name__ == "__main__":
     main()

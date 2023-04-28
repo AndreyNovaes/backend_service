@@ -16,9 +16,9 @@ if ! command -v ab &> /dev/null; then
   fi
 fi
 
-echo "Starting load test: 1000 requests with 100 concurrent in 60 seconds..."
-CONCURRENT_USERS=100
-NUM_REQUESTS=1000
+echo "Starting load test: 100000 requests with 10000 concurrent in 60 seconds..."
+export CONCURRENT_USERS=10000
+export NUM_REQUESTS=100000
 
 echo "URL,StartTime,Milliseconds" > ./report_load_test/load_tests_results.csv
 

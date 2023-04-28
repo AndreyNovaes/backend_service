@@ -4,3 +4,4 @@ node_modules
 ab_results.csv
 ab_results.tsv
 venv
+load_tests_results.csv

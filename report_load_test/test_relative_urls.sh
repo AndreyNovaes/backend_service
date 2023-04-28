@@ -13,7 +13,6 @@ output_file="./report_load_test/tested_urls.txt"
 while read -r line; do
   relative_url=$(echo "${line}" | awk '{print $1}')
 
-  # Skip testing the base URL if the relative URL is empty
   if [ -z "${relative_url}" ]; then
     continue
   fi
