@@ -1,5 +1,5 @@
 import { poolConnectionClient } from "../database/pgPoolConnection.database";
-// import { redisClient } from "../database/redisClient";
+import { redisClient } from "../database/redisClient";
 
 export async function getSearchProductsService(
   website?: string,
@@ -35,11 +35,11 @@ export async function getSearchProductsService(
 
   const cacheKey = `search:${website}:${category}:${search}:${page}:${limit}`;
   try {
-    // const cachedData = await redisClient.get(cacheKey);
+    const cachedData = await redisClient.get(cacheKey);
 
-    // if (cachedData) {
-    //   return JSON.parse(cachedData);
-    // }
+    if (cachedData) {
+      return JSON.parse(cachedData);
+    }
 
     const countResult = await poolConnectionClient.query(countQuery, queryParams.slice(0, -2));
     const totalCount = parseInt(countResult.rows[0].count, 10);
@@ -52,7 +52,7 @@ export async function getSearchProductsService(
     };
 
     // cachea os resultados por 1 hora (3600 segundos)
-    // await redisClient.setex(cacheKey, 3600, JSON.stringify(result));
+    await redisClient.setex(cacheKey, 3600, JSON.stringify(result));
 
     return result;
   } catch (error) {
