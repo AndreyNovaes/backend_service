@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node src/server.ts",
-    "start": "npm run build && node dist/server.js",
+    "start": "node dist/server.js",
     "test": "bash report_load_test/generate_report.sh && xdg-open report_load_test/report.html"
   },
   "keywords": [],
