@@ -1,11 +1,17 @@
-import { Request, Response, NextFunction } from "express";
-import { getWebsitesService } from "../services/websites.service";
+import { NextFunction, Request, Response } from "express";
+import { WebsitesService } from "../services/websites.service";
 
-export async function getWebsitesController(req: Request, res: Response, next: NextFunction) {
-  try {
-    const websites = await getWebsitesService();
-    res.status(200).json(websites);
-  } catch (error) {
-    next(error);
+export class WebsitesController {
+  constructor(private websitesService: WebsitesService) {}
+
+  getWebsites = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const websites = await this.websitesService.getWebsites();
+      res.status(200).json({ websites });
+    } catch (error) {
+      next(error);
+    }
   }
 }
+
+

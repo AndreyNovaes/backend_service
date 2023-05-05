@@ -1,11 +1,15 @@
 import { Request, Response, NextFunction } from "express";
-import { getCategoriesService } from "../services/categories.service";
+import { ICategoryService } from "../interfaces/ICategories";
 
-export async function getCategoriesController(req: Request, res: Response, next: NextFunction) {
-  try {
-    const categories = await getCategoriesService();
-    res.status(200).json(categories);
-  } catch (error) {
-    next(error);
+export class CategoriesController {
+  constructor(private categoryService: ICategoryService) {}
+
+  getCategories = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const categories = await this.categoryService.getCategories();
+      res.status(200).json({ categories });
+    } catch (error) {
+      next(error);
+    }
   }
 }
