@@ -6,13 +6,14 @@ export class SearchController {
 
   getSearchProducts = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { website, category, search } = req.query;
+      const { website, category, search, page, limit } = req.query;
+      
       const searchParams = {
         website: typeof website === 'string' ? website : undefined,
         category: typeof category === 'string' ? category : undefined,
         search: typeof search === 'string' ? search : undefined,
-        page: 1,
-        limit: 24,
+        page: typeof page === 'string' ? parseInt(page) : 1,
+        limit: typeof limit === 'string' ? parseInt(limit) : 24,
       };
 
       const products = await this.searchProductsService.searchProducts(searchParams);
