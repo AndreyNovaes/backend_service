@@ -5,9 +5,7 @@ export class SearchProductsRepository implements ISearchProductsRepository {
   constructor(private pool: typeof poolConnectionClient) { }
 
   async getSearchProducts(
-    { website, category, search }: ISearchParams,
-    page: number = 1,
-    limit: number = 24
+    { website, category, search, page, limit }: ISearchParams,
   ): Promise<IPaginatedProducts> {
     let baseQuery = "FROM scrapped_data WHERE 1 = 1";
     const queryParams = [];

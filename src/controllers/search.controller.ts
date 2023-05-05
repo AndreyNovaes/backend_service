@@ -11,6 +11,8 @@ export class SearchController {
         website: typeof website === 'string' ? website : undefined,
         category: typeof category === 'string' ? category : undefined,
         search: typeof search === 'string' ? search : undefined,
+        page: 1,
+        limit: 24,
       };
 
       const products = await this.searchProductsService.searchProducts(searchParams);
